@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>غرفة الدردشة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .chat-header {
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+        }
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-messages p {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f4f4f4;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header" id="chatHeader">غرفة الدردشة</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا...">
+            <button id="sendMessageBtn">إرسال</button>
+        </div>
+    </div>
+    <script>
+        const roomName = sessionStorage.getItem("roomName");
+        const roomPassword = sessionStorage.getItem("roomPassword");
+
+        // تحديث عنوان الغرفة
+        if (roomName) {
+            document.getElementById('chatHeader').textContent = `غرفة: ${roomName}`;
+        }
+
+        // إضافة الرسائل
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            const messageInput = document.getElementById('messageInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const message = messageInput.value.trim();
+
+            if (message !== "") {
+                const messageElement = document.createElement('p');
+                messageElement.textContent = message;
+                chatMessages.appendChild(messageElement);
+
+                // تصفية المدخل
+                messageInput.value = "";
+                chatMessages.scrollTop = chatMessages.scrollHeight; // التمرير إلى آخر الرسائل
+            }
+        });
+    </script>
+
+</body></html>
